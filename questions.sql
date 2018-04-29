@@ -67,3 +67,11 @@ as
 	WHERE 
 		s.salary>=100000
 ;
+
+#Write a SQL Statement to find the employees and the running total the salary
+SELECT
+		name,
+        salary,
+        @running_total := @running_total+salary as running_total
+FROM programmer_interview.salesperson, (SELECT @running_total := 0) r
+;
