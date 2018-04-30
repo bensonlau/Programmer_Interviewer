@@ -105,7 +105,7 @@ GROUP by 1
 HAVING  brands_sold like '%samsonic%'
 ;
 
-#Create table of first and second orders made by employee
+#Create table of dates of first and second orders sold by and the amount of the order by employee
 ##moving rows to columns
 SELECT
 	g.name,
@@ -157,4 +157,11 @@ FROM
 FROM salesperson s
 GROUP by 1
 ) age
+;
+##this is also possible through use of the floor function
+SELECT
+	s.age,
+    5*FLOOR(s.age/5) AS valueBucket,
+	CONCAT(5*FLOOR(s.age/5),'-',5*FLOOR(s.age/5)+4) as age_range
+FROM salesperson s
 ;
