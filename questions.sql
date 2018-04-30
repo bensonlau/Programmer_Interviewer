@@ -91,6 +91,7 @@ FROM
 )  t
 ;
 
+#Searching across columns
 #Identify all salesperson who have sold Samsonic
 SELECT
 	s.name,
@@ -102,5 +103,4 @@ LEFT JOIN
 	Customer c on o.cust_id=c.id
 GROUP by 1
 HAVING  brands_sold like '%samsonic%'
-;
 ;
