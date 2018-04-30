@@ -75,3 +75,18 @@ SELECT
         @running_total := @running_total+salary as running_total
 FROM programmer_interview.salesperson, (SELECT @running_total := 0) r
 ;
+
+##another way of doing it without session variables
+SELECT
+*
+FROM
+(SELECT
+o.order_date,
+o.amount as a,
+sum(o1.amount) as t
+FROM programmer_interview.orders o
+JOIN
+programmer_interview.orders o1
+	on o.order_date>=o1.order_date
+GROUP by 1,2
+)  t
