@@ -132,3 +132,16 @@ GROUP by 1,2
 ) g
 group by 1
 ;
+
+#Creating subtotals
+SELECT
+	s.name,
+    o.number as order_number,
+	sum(o.amount) as order_amount
+FROM orders o
+LEFT JOIN salesperson s
+	on o.salesperson_id=s.id
+LEFT JOIN
+	Customer c on o.cust_id=c.id
+GROUP by 1,2 WITH ROLLUP
+;
