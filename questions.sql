@@ -14,8 +14,6 @@ SELECT
 *
 FROM programmer_interview.orders;
 
-
-
 #a. The names of all salespeople that have an order with Samsonic.
 SELECT
 	distinct s.name
@@ -68,7 +66,7 @@ as
 		s.salary>=100000
 ;
 
-#Write a SQL Statement to find the employees and the running total the salary
+#Write a SQL Statement to find the employees and the running total of the salary
 SELECT
 		name,
         salary,
@@ -91,3 +89,18 @@ FROM
 		on o.order_date>=o1.order_date
 	GROUP by 1,2
 )  t
+;
+
+#Identify all salesperson who have sold Samsonic
+SELECT
+	s.name,
+    group_concat(distinct c.name) as brands_sold
+FROM orders o
+LEFT JOIN salesperson s
+	on o.salesperson_id=s.id
+LEFT JOIN
+	Customer c on o.cust_id=c.id
+GROUP by 1
+HAVING  brands_sold like '%samsonic%'
+;
+;
