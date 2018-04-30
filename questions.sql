@@ -104,3 +104,31 @@ LEFT JOIN
 GROUP by 1
 HAVING  brands_sold like '%samsonic%'
 ;
+
+#Create table of first and second orders made by employee
+##moving rows to columns
+SELECT
+	g.name,
+    max(case when g.rank=1 then order_date else null end) as first_order_date,
+    max(case when g.rank=1 then order_amount else null end) as first_order_amount,
+	max(case when g.rank=2 then order_date else null end) as second_order_date,
+    max(case when g.rank=2 then order_amount else null end) as second_order_amount
+FROM
+(
+	SELECT
+		o.order_date,
+		s.name,
+        sum(o.amount) as order_amount,
+		count(o1.order_date)+1 as rank
+	FROM orders o
+	LEFT JOIN salesperson s
+		on o.salesperson_id=s.id
+	LEFT JOIN
+		Customer c 
+		on o.cust_id=c.id
+	LEFT JOIN orders o1
+		on o.order_date>o1.order_date AND o.salesperson_id=o1.salesperson_id
+GROUP by 1,2
+) g
+group by 1
+;
