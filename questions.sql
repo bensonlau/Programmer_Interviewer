@@ -145,3 +145,16 @@ LEFT JOIN
 	Customer c on o.cust_id=c.id
 GROUP by 1,2 WITH ROLLUP
 ;
+
+#rounding ages of salesperson into bins of 10
+SELECT
+	CONCAT(age.a-5,'-',age.a+4) as age_range,
+    age.count
+FROM
+(SELECT
+	round(age,-1) as a,
+    count(*) as count
+FROM salesperson s
+GROUP by 1
+) age
+;
