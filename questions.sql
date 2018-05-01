@@ -168,3 +168,14 @@ SELECT
 	CONCAT(5*FLOOR(s.age/5),'-',5*FLOOR(s.age/5)+4) as age_range
 FROM salesperson s
 ;
+
+#Write a query that shows the number of employees with names that start with A through M,
+#and the number at employees with names starting with N - Z.
+ SELECT 
+	CASE WHEN name < 'n' THEN 'A-M'
+		WHEN name >= 'n' THEN 'N-Z'
+		ELSE NULL END AS range_name,
+       COUNT(*) AS count
+  FROM salesperson
+ GROUP BY 1
+ ;
