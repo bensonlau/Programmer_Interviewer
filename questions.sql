@@ -37,7 +37,7 @@ LEFT JOIN
 	Customer c on o.cust_id=c.id
 where c.name not in ('Samsonic')
 ;
-;
+
 #c. The names of salespeople that have 2 or more orders.
 SELECT
 	s.name,
@@ -58,12 +58,15 @@ DROP TABLE if exists programmer_interview.highAchiever;
 CREATE TABLE programmer_interview.highAchiever
 as
 	SELECT
+		@curRank := @curRank + 1,
 		s.name,
-		s.age
+		s.age,
+        s.salary
 	FROM
-		salesperson s
+		salesperson s, (SELECT @curRank := 0) r
 	WHERE 
 		s.salary>=100000
+	order by 4 desc
 ;
 
 #Write a SQL Statement to find the employees and the running total of the salary
@@ -128,7 +131,7 @@ FROM
 		on o.cust_id=c.id
 	LEFT JOIN orders o1
 		on o.order_date>o1.order_date AND o.salesperson_id=o1.salesperson_id
-GROUP by 1,2
+	GROUP by 1,2
 ) g
 group by 1
 ;
